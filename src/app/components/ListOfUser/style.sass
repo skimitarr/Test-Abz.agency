@@ -1,0 +1,59 @@
+@import '../../styles/variables'
+
+.title
+  text-align: center
+  margin-bottom: 50px
+
+.list
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr
+  grid-gap: 29px
+  margin-bottom: 50px
+  @media (max-width: 768px)
+    grid-template-columns: 1fr 1fr
+    grid-gap: 16px
+  @media (max-width: 360px)
+    grid-template-columns: 1fr
+    grid-gap: 20px
+
+.card
+  height: 254px
+  padding: 20px
+  border-radius: 10px
+  background-color: $whiteColor
+  overflow: hidden
+  text-overflow: ellipsis
+  &__photo
+    border-radius: 50%
+    margin: 0 auto
+    margin-bottom: 20px
+  &__name
+    margin-bottom: 20px
+    text-align: center
+  &__text
+    text-align: center
+  &__attr
+    text-align: center
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    cursor: pointer
+
+.tooltip
+  position: relative
+  background-color: $blackColor
+  padding: 5px 16px
+  border-radius: 4px
+  color: $whiteColor
+
+.show-more
+  width: 120px
+
+.preloader
+  animation: rotate 1.5s linear infinite
+
+@keyframes rotate
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)

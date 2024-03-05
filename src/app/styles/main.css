@@ -1,0 +1,122 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "Nunito";
+  src: url("/fonts/Nunito-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+/* Указываем box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul, ol {
+  padding: 0;
+}
+
+/* Убираем внешние отступы */
+body, h1, h2, h3, h4, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul, ol {
+  list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input, button, textarea, select {
+  font: inherit;
+}
+
+body {
+  font-family: "Nunito", "Roboto";
+  margin: 0 auto;
+  max-width: 1170px;
+  background-color: #F8F8F8;
+}
+
+h1, h2 {
+  font-size: 40px;
+  line-height: 40px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+section {
+  margin-bottom: 140px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  width: 100px;
+  height: 34px;
+  outline: none;
+  border: none;
+  border-radius: 80px;
+  background-color: #F4E041;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #FFE302;
+}
+.btn.disabled {
+  background-color: #B4B4B4;
+  color: #ffffff;
+  cursor: inherit;
+}
+.btn:not(:last-child) {
+  margin-right: 10px;
+}
+
+@media (max-width: 1024px) {
+  .global-pad {
+    padding: 0 60px;
+  }
+}
+@media (max-width: 768px) {
+  .global-pad {
+    padding: 0 32px;
+  }
+}
+@media (max-width: 360px) {
+  .global-pad {
+    padding: 0 16px;
+  }
+}/*# sourceMappingURL=main.css.map */

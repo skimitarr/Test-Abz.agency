@@ -1,0 +1,31 @@
+@import '../../styles/variables'
+
+.hero
+  position: relative
+  max-width: 1170px
+  height: 650px
+  padding: 164px 25px 105px
+  @media (max-width: 768px)
+    height: 500px
+    padding: 89px 25px 105px
+  @media (max-width: 360px)
+    padding: 40px 16px 60px
+  &-wrapper
+    flex-direction: column
+    width: 380px
+    margin: 0 auto
+    @media (max-width: 360px)
+      width: 320px
+  &-title
+    color: $blackColor
+    text-align: center
+    margin-bottom: 21px
+  &-desc
+    color: $blackColor
+    text-align: center
+    margin-bottom: 32px
+  &-image
+    z-index: -1
+    object-fit: cover
+
+

@@ -1,0 +1,42 @@
+@import '../../styles/variables'
+
+.photo
+  width: 380px
+  margin-bottom: 50px
+  @media (max-width: 360px)
+    width: 328px
+  &__label
+    display: inline-flex
+    width: 83px
+    height: 54px
+    border: 1px solid $blackColor
+    border-bottom-left-radius: 5px
+    border-top-left-radius: 5px
+    transition: background-color 0.3s ease-in-out
+    cursor: pointer
+    &:hover
+      background-color: $primaryHoverColor
+    &.error-color
+      border: 2px solid $errorColor
+
+  &__input
+    display: none
+
+  &__text
+    display: inline-flex
+    justify-content: flex-start
+    padding-left: 16px
+    width: calc(100% - 83px)
+    height: 54px
+    border: 1px solid $lightGreyColor
+    border-left: unset
+    border-bottom-right-radius: 5px
+    border-top-right-radius: 5px
+    color: $lightGreyColor
+    &.filled
+      color: $blackColor
+    &.error-color
+      border: 2px solid $errorColor
+      border-left: unset
+
+
