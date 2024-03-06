@@ -119,4 +119,17 @@ section {
   .global-pad {
     padding: 0 16px;
   }
+}
+
+.preloader {
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }/*# sourceMappingURL=main.css.map */

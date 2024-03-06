@@ -26,7 +26,12 @@ export const appDataSlice = createSlice({
       state.answer = action.payload;
     },
     getAllUsers(state, action) {
-      state.allUsers = [...state.allUsers, ...action.payload];
+      const { users, flag } = action.payload;
+      if (flag === 'reload') {
+        state.allUsers = users;
+      } else {
+        state.allUsers = [...state.allUsers, ...users];
+      }
     },
     getPositions(state, action) {
       state.positions = action.payload;

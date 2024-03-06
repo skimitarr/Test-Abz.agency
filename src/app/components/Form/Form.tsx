@@ -31,6 +31,9 @@ export function Form() {
   const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm<FormFromLib>();
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [registrationError, setRegistrationError] = useState<string>('');
+  const [preloader, setPreloader] = useState<boolean>(false);
+
+  console.log(newUser)
 
   useEffect(() => {
     dispatch({ type: 'actionType/getPositions' });
@@ -39,8 +42,20 @@ export function Form() {
   useEffect(() => {
     if (newUser.success) {
       setIsRegistered(true);
-      dispatch({ type: 'actionType/getAllUsers' });
+      dispatch({ type: 'actionType/getAllUsers', payload: { url: '/users?page=1&count=6', flag: 'reload' } });
       setTimeout(() => setIsRegistered(false), 10000);
+
+      setPreloader(false);
+      setRegistrationError('');
+
+      setValue('name', '');
+      setValue('email', '');
+      setValue('phone', '');
+      setValue('position_id', 0);
+      setValue('photo', null);
+    } else {
+      setPreloader(false);
+      setRegistrationError(newUser.message);
     }
   }, [newUser]);
 
@@ -64,18 +79,7 @@ export function Form() {
     }
 
     dispatch({ type: 'actionType/addUser', payload: modifiedData });
-
-    if (newUser.success) {
-      setIsRegistered(true);
-
-      setValue('name', '');
-      setValue('email', '');
-      setValue('phone', '');
-      setValue('position_id', 0);
-      setValue('photo', null);
-    } else {
-      setRegistrationError(newUser.message)
-    }
+    setPreloader(true);
   }
 
   return (
@@ -158,13 +162,23 @@ export function Form() {
             setFileSizeError={setFileSizeError}
           />
 
-          <button
-            className={`btn ${isDisabled ? 'disabled' : ''}`} type="submit"
-            disabled={isDisabled}
-          >
-            Sign up
-          </button>
-          {registrationError && <p className='registrationError'>{registrationError}</p>}
+          {preloader
+            ?
+            <div className="flex">
+              <img src={'/preloader.png'} alt="preloader" className="preloader" />
+            </div>
+            :
+            <>
+              {registrationError && <p className='registrationError'>{registrationError}</p>}
+              <button
+                className={`btn ${isDisabled ? 'disabled' : ''}`} type="submit"
+                disabled={isDisabled}
+              >
+                Sign up
+              </button>
+            </>}
+
+
         </form>
       </section>
 

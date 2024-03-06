@@ -6,13 +6,13 @@ import { ApiResponseUsers, ApiResponsePositions, ApiResponseToken, ApiResponseAd
 
 const BaseURL = 'https://frontend-test-assignment-api.abz.agency/api/v1'
 
-function* handleGetAllUsers(action: { type: string; payload: { url: string } }) {
+function* handleGetAllUsers(action: { type: string; payload: { url: string, flag?: string } }) {
   try {
     const response: Response = yield call(fetch, BaseURL + action.payload.url);
     const data: ApiResponseUsers = yield call([response, 'json']);
 
     yield put(getAPIAnswer(data));
-    yield put(getAllUsers(data.users));
+    yield put(getAllUsers({ users: data.users, flag: action.payload.flag }));
   } catch (error) {
     console.error('Error getting users:', error);
   }

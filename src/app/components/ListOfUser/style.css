@@ -59,17 +59,4 @@
 
 .show-more {
   width: 120px;
-}
-
-.preloader {
-  animation: rotate 1.5s linear infinite;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }/*# sourceMappingURL=style.css.map */
