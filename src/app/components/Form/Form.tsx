@@ -29,6 +29,7 @@ export function Form() {
   const [fileSizeError, setFileSizeError] = useState<string | null>(null);
   const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
   const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm<FormFromLib>();
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch({ type: 'actionType/getPositions' });
@@ -41,6 +42,20 @@ export function Form() {
       setTimeout(() => setIsRegistered(false), 10000);
     }
   }, [newUser]);
+
+  useEffect(() => {
+    const containsValue = Object.values(watch()).some(value => {
+      return value !== null && value !== undefined && value !== "" && !(value instanceof FileList && value.length === 0);
+    });
+
+    if (Object.keys(errors).length > 0 || !containsValue || fileSizeError) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [errors, watch()]);
+
+  console.log(isDisabled)
 
   const onSubmit: SubmitHandler<FormFromLib> = (data) => {
     setIsRegistered(true);
@@ -128,8 +143,8 @@ export function Form() {
                 <label className="input-radio-label" htmlFor={`${position.name}`} tabIndex={0}>{position.name}</label>
               </div>
             ))}
+            {errors.position_id && <span className="error">Please select a position</span>}
           </div>
-          {errors.position_id && <span className="error">Please select a position</span>}
 
           <PhotoUpload
             register={register}
@@ -139,7 +154,12 @@ export function Form() {
             setFileSizeError={setFileSizeError}
           />
 
-          <button className={`btn ${Object.keys(errors).length > 0 ? 'disabled' : ''}`} type="submit">Sign up</button>
+          <button
+            className={`btn ${isDisabled ? 'disabled' : ''}`} type="submit"
+            disabled={isDisabled}
+          >
+            Sign up
+          </button>
         </form>
       </section>
 
