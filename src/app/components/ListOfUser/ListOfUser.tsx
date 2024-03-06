@@ -30,7 +30,7 @@ const selector = applySpec<Selector>({
 export function ListOfUser() {
   const { answer, allUsers } = useAppSelector<Selector>(selector, fastDeepEqual);
   const [currentUsers, setCurrentUsers] = useState<User[]>([]);
-  const [showBtn, setShowBtn] = useState(true);
+  const [showBtn, setShowBtn] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

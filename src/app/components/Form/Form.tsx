@@ -36,8 +36,6 @@ export function Form() {
     dispatch({ type: 'actionType/getPositions' });
   }, []);
 
-  console.log(newUser)
-
   useEffect(() => {
     if (newUser.success) {
       setIsRegistered(true);

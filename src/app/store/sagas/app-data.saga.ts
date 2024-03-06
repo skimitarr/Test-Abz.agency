@@ -10,7 +10,6 @@ function* handleGetAllUsers(action: { type: string; payload: { url: string } }) 
   try {
     const response: Response = yield call(fetch, BaseURL + action.payload.url);
     const data: ApiResponseUsers = yield call([response, 'json']);
-    console.log(data);
 
     yield put(getAPIAnswer(data));
     yield put(getAllUsers(data.users));
