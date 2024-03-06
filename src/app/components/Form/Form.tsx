@@ -30,10 +30,13 @@ export function Form() {
   const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
   const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm<FormFromLib>();
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [registrationError, setRegistrationError] = useState<string>('');
 
   useEffect(() => {
     dispatch({ type: 'actionType/getPositions' });
   }, []);
+
+  console.log(newUser)
 
   useEffect(() => {
     if (newUser.success) {
@@ -55,10 +58,7 @@ export function Form() {
     }
   }, [errors, watch()]);
 
-  console.log(isDisabled)
-
   const onSubmit: SubmitHandler<FormFromLib> = (data) => {
-    setIsRegistered(true);
     const modifiedData = {
       ...data,
       position_id: +data.position_id,
@@ -67,12 +67,18 @@ export function Form() {
 
     dispatch({ type: 'actionType/addUser', payload: modifiedData });
 
-    setValue('name', '');
-    setValue('email', '');
-    setValue('phone', '');
-    setValue('position_id', 0);
-    setValue('photo', null);
-  };
+    if (newUser.success) {
+      setIsRegistered(true);
+
+      setValue('name', '');
+      setValue('email', '');
+      setValue('phone', '');
+      setValue('position_id', 0);
+      setValue('photo', null);
+    } else {
+      setRegistrationError(newUser.message)
+    }
+  }
 
   return (
     <>
@@ -97,7 +103,7 @@ export function Form() {
 
           <div className="input-wrapper">
             <input
-              className={`input-text ${errors.name ? 'error-color' : ''} ${watch('email')?.length ? 'filled' : ''}`}
+              className={`input-text ${errors.email ? 'error-color' : ''} ${watch('email')?.length ? 'filled' : ''}`}
               type="email"
               placeholder="Email"
               {...register('email', {
@@ -113,7 +119,7 @@ export function Form() {
 
           <div className="input-wrapper mb-20">
             <input
-              className={`input-text ${errors.name ? 'error-color' : ''} ${watch('phone')?.length ? 'filled' : ''}`}
+              className={`input-text ${errors.phone ? 'error-color' : ''} ${watch('phone')?.length ? 'filled' : ''}`}
               type="tel"
               placeholder="Phone"
               {...register('phone', {
@@ -160,6 +166,7 @@ export function Form() {
           >
             Sign up
           </button>
+          {registrationError && <p className='registrationError'>{registrationError}</p>}
         </form>
       </section>
 

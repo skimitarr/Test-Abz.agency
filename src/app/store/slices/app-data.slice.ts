@@ -4,7 +4,7 @@ import { AppDataState } from '../types';
 export const name = 'appData';
 
 const userInitialState: AppDataState = {
-  allUsers: {
+  answer: {
     success: false,
     page: 0,
     total_pages: 0,
@@ -13,6 +13,7 @@ const userInitialState: AppDataState = {
     links: { next_url: null, prev_url: null },
     users: [],
   },
+  allUsers: [],
   positions: {success: false, positions : []},
   newUser: {success : false,  user_id : 0,  message : ""},
 };
@@ -21,8 +22,11 @@ export const appDataSlice = createSlice({
   name,
   initialState: userInitialState,
   reducers: {
+    getAPIAnswer(state, action) {
+      state.answer = action.payload;
+    },
     getAllUsers(state, action) {
-      state.allUsers = action.payload;
+      state.allUsers = [...state.allUsers, ...action.payload];
     },
     getPositions(state, action) {
       state.positions = action.payload;
@@ -33,4 +37,4 @@ export const appDataSlice = createSlice({
   },
 });
 
-export const { getAllUsers, getPositions, newUser } = appDataSlice.actions;
+export const { getAPIAnswer, getAllUsers, getPositions, newUser } = appDataSlice.actions;

@@ -99,4 +99,9 @@
 .error {
   padding-left: 20px;
   color: #CB3D40;
+}
+
+.registrationError {
+  margin-top: 10px;
+  color: #CB3D40;
 }/*# sourceMappingURL=style.css.map */

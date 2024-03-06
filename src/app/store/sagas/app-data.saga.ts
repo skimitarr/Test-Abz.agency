@@ -1,16 +1,19 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { PayloadAction } from '@reduxjs/toolkit';
-import { getAllUsers, getPositions, newUser} from '../slices/app-data.slice';
+import { getAPIAnswer, getAllUsers, getPositions, newUser} from '../slices/app-data.slice';
 import { ApiResponseUsers, ApiResponsePositions, ApiResponseToken, ApiResponseAddUser, Form } from '../types';
 
 const BaseURL = 'https://frontend-test-assignment-api.abz.agency/api/v1'
 
-function* handleGetAllUsers() {
+function* handleGetAllUsers(action: { type: string; payload: { url: string } }) {
   try {
-    const response: Response = yield call(fetch, BaseURL+'/users?page=1&count=17');
+    const response: Response = yield call(fetch, BaseURL + action.payload.url);
     const data: ApiResponseUsers = yield call([response, 'json']);
-    yield put(getAllUsers(data));
+    console.log(data);
+
+    yield put(getAPIAnswer(data));
+    yield put(getAllUsers(data.users));
   } catch (error) {
     console.error('Error getting users:', error);
   }

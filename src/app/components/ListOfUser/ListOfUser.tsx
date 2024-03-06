@@ -10,11 +10,12 @@ import { handleMouseEnter, handleMouseLeave } from "../utils/tooltipUtils";
 import "./style.css";
 
 type Selector = {
-  allUsers: ApiResponseUsers,
+  answer: ApiResponseUsers,
+  allUsers: User[],
 };
 
 const selector = applySpec<Selector>({
-  allUsers: selectFromAppData('allUsers', {
+  answer: selectFromAppData('answer', {
     success: false,
     page: 0,
     total_pages: 0,
@@ -23,28 +24,37 @@ const selector = applySpec<Selector>({
     links: { next_url: null, prev_url: null },
     users: [],
   }),
+  allUsers: selectFromAppData('allUsers', [])
 });
 
 export function ListOfUser() {
-  const { allUsers } = useAppSelector<Selector>(selector, fastDeepEqual);
-  const users = allUsers.users;
-  const [currentUsers, setCurrentUsers] = useState<User[]>([])
-  const [count, setCount] = useState(1);
+  const { answer, allUsers } = useAppSelector<Selector>(selector, fastDeepEqual);
+  const [currentUsers, setCurrentUsers] = useState<User[]>([]);
+  const [showBtn, setShowBtn] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch({ type: 'actionType/getAllUsers' });
+    dispatch({ type: 'actionType/getAllUsers', payload: { url: '/users?page=1&count=6' } });
   }, []);
 
   useEffect(() => {
-    setCurrentUsers(users.slice(0, 6));
-  }, [users]);
+    setCurrentUsers(allUsers);
+  }, [allUsers]);
+
+  useEffect(() => {
+    if (answer.links.next_url) {
+      setShowBtn(true);
+    } else {
+      setShowBtn(false);
+    }
+  }, [answer]);
 
   const showMore = () => {
-    const userPerPage = 6;
-    let userOnPage = (count + 1) * userPerPage;
-    setCount(prevCount => prevCount + 1);
-    setCurrentUsers(users.slice(0, userOnPage));
+    if (answer.links.next_url) {
+      const parts = answer.links.next_url.split('v1');
+      const url = parts[1];
+      dispatch({ type: 'actionType/getAllUsers', payload: { url } });
+    }
   }
 
   const handleChangePhoneNumber = (number: string) => {
@@ -59,7 +69,7 @@ export function ListOfUser() {
       {currentUsers.length ?
         <ul className='list'>
           {currentUsers.map((user) => (
-            <li key={user.id} className="card">
+            <li key={user.registration_timestamp + user.id} className="card">
               <img src={user.photo || '/photo-cover.svg'} alt="user's photo" className="card__photo" />
               <p className="card__name card__attr"
                 onMouseEnter={(event) => handleMouseEnter(event, `${user.name}`)}
@@ -81,7 +91,7 @@ export function ListOfUser() {
           <img src={'/preloader.png'} alt="preloader" className="preloader" />
         </div>
       }
-      {currentUsers.length < users.length &&
+      {showBtn &&
         <div className='flex'>
           <button className='btn show-more' onClick={() => showMore()}>Show more</button>
         </div>}

@@ -1,6 +1,7 @@
 
 export type AppDataState = {
-  allUsers: ApiResponseUsers;
+  answer: ApiResponseUsers;
+  allUsers: User[]
   positions: ApiResponsePositions;
   newUser: NewUser;
 }
