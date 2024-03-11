@@ -2,7 +2,7 @@
   width: 380px;
   margin-bottom: 50px;
 }
-@media (max-width: 360px) {
+@media (max-width: 430px) {
   .photo {
     width: 328px;
   }

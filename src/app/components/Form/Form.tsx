@@ -33,8 +33,6 @@ export function Form() {
   const [registrationError, setRegistrationError] = useState<string>('');
   const [preloader, setPreloader] = useState<boolean>(false);
 
-  console.log(newUser)
-
   useEffect(() => {
     dispatch({ type: 'actionType/getPositions' });
   }, []);

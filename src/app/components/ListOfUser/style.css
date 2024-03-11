@@ -15,7 +15,7 @@
     grid-gap: 16px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 430px) {
   .list {
     grid-template-columns: 1fr;
     grid-gap: 20px;

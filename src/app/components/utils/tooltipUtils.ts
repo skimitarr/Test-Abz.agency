@@ -2,7 +2,7 @@ import { MouseEvent} from "react";
 
 export const handleMouseEnter = (event: MouseEvent<HTMLParagraphElement>, text: string) => {
   const containerWidth = event.currentTarget.clientWidth;
-  const textWidth = getTextWidth(text, event.currentTarget.style.font || '16px Times New Roman');
+  const textWidth = getTextWidth(text, event.currentTarget.style.font || '16px Nunito');
 
   if (textWidth > containerWidth) {
     const tooltipElement = document.createElement('div');
@@ -14,12 +14,13 @@ export const handleMouseEnter = (event: MouseEvent<HTMLParagraphElement>, text: 
     tooltipElement.style.position = 'fixed';
     tooltipElement.style.top = `${rect.bottom}px`;
     tooltipElement.style.left = `${rect.left + rect.width / 2 - textWidth / 2}px`;
+    tooltipElement.style.right = '';
 
     // Проверяем, выходит ли элемент за пределы экрана
     const bodyWidth = document.body.clientWidth;
     const tooltipRight = rect.left + rect.width / 2  + textWidth / 2 ;
     if (tooltipRight > bodyWidth) {
-      tooltipElement.style.left = `${bodyWidth - textWidth *1.3}px`;
+      tooltipElement.style.left = `${bodyWidth - textWidth - 25}px`;
     }
 
     // Проверяем, выходит ли элемент за пределы экрана слева
@@ -37,7 +38,6 @@ export const handleMouseEnter = (event: MouseEvent<HTMLParagraphElement>, text: 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     if (context) {
-      const font = '16px Times New Roman';
       context.font = font;
       const metrics = context.measureText(text);
       return metrics.width;
